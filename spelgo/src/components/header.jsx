@@ -1,14 +1,12 @@
 import React from "react";
 
 function Header() {
+  const navMenu = ['uno', 'duo', 'trio', 'pool'];
   return(
     <nav>
       <div>
         <ul>
-          <li>uno</li>
-          <li>duo</li>
-          <li>trio</li>
-          <li>pool</li>
+          {navMenu.map((item) => <li>{item}</li>)}
         </ul>
       </div>
       <div className="logo">
