@@ -1,30 +1,16 @@
 import React from "react";
 
 class Login extends React.Component {
-  constructor () {
-    super();
-
-    this.handleChange = this.handleChange.bind(this);
-
-    this.state = {
-      nome: '',
-      senha: '',
-    }
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  }
 
   render() {
+    const { handleClick, buttonClick } = this.props;
     return (
       <div className="login">
         <h3>Login</h3>
         <form>
-          <input id="nome" type="text" onChange={this.handleChange} />
-          <input id="senha" type="password" onChange={this.handleChange} />
+          <input id="nome" type="text" onChange={ handleClick } />
+          <input id="senha" type="password" onChange={ handleClick } />
+          <button onClick={ buttonClick }>Entrar</button>
         </form>
       </div>
     )
