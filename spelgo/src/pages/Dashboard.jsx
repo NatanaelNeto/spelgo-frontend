@@ -31,8 +31,8 @@ class Dashboard extends React.Component {
       headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
     };
     const response = await fetch('https://termo-crente.herokuapp.com/login', data);
-    const body = await response.json();
-    console.log('requisição -> ', body);
+    const { token } = await response.json();
+    this.setState({ token });
   }
 
   // componentDidMount() {
@@ -44,9 +44,15 @@ class Dashboard extends React.Component {
   // }
 
   render() {
-    return (
+    const { token } = this.state;
+    return token.length > 0 ? (
       <div>
-        <Login handleClick={this.handleChange} buttonClick={this.handleLogin} />
+        {token}
+      </div>
+    )
+    : (
+      <div>
+        <Login handleClick={this.handleChange} buttonClick={this.handleLogin}/>
       </div>
     )
   }
