@@ -27,7 +27,7 @@ class Dashboard extends React.Component {
     const { nome, senha } = this.state;
     const data = {
       method: 'POST',
-      body: JSON.stringify({ nome, senha}),
+      body: JSON.stringify({ nome, senha }),
       headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
     };
     const response = await fetch('https://termo-crente.herokuapp.com/login', data);
@@ -51,7 +51,7 @@ class Dashboard extends React.Component {
       </div>
     )
     : (
-      <div>
+      <div className="container">
         <Login handleClick={this.handleChange} buttonClick={this.handleLogin}/>
       </div>
     )
