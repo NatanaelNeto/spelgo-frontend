@@ -4,7 +4,7 @@ import '../style/Login.css'
 class Login extends React.Component {
 
   render() {
-    const { handleClick, buttonClick } = this.props;
+    const { handleClick, buttonClick, message } = this.props;
     return (
       <div className="login">
         <h3>Login</h3>
@@ -12,6 +12,7 @@ class Login extends React.Component {
           <input id="nome" type="text" onChange={ handleClick } />
           <input id="senha" type="password" onChange={ handleClick } required />
           <button onClick={ buttonClick }>Entrar</button>
+          { message.length > 1 && <span>{ message }</span> }
         </form>
       </div>
     )

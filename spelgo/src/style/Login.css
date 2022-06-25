@@ -40,3 +40,8 @@
 .login-form button:hover {
   background-color: #68C0aC;
 }
+
+.login-form span {
+  color: #D1AC00;
+  font-size: 14px;
+}
