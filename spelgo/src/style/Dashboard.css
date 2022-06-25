@@ -1,0 +1,15 @@
+.block-container {
+  background-color: #3D3522;
+  display: flex;
+  width: 100%;
+  flex-flow: column wrap;
+  padding: 20px;
+}
+
+.block-container input {
+  width: 50%;
+}
+
+.block-container button {
+  padding: 5px 20px;
+}

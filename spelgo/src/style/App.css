@@ -76,3 +76,38 @@ nav ul li.active {
   justify-content: center;
   align-items: center;
 }
+
+.column-type {
+  flex-flow: column;
+  justify-content: start;
+}
+
+input {
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: none;
+  border: none;
+  margin: 5px;
+  padding: 5px;
+  font-size: 18px;
+  color: #CAF7E2;
+}
+
+button {
+  outline: none;
+  border: none;
+  color: #222a22;
+  background-color: #58B09C;
+  margin: 5px;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+button:hover {
+  background-color: #68C0aC;
+}
+
+span {
+  color: #D1AC00;
+  font-size: 14px;
+}

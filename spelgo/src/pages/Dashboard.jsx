@@ -1,6 +1,8 @@
 import React from "react";
+import AddWords from "../components/addWords";
 import Login from "../components/login";
 import Words from "../components/words";
+import '../style/Dashboard.css';
 
 class Dashboard extends React.Component {
   constructor () {
@@ -8,6 +10,8 @@ class Dashboard extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.updateState = this.updateState.bind(this);
+    this.fetchWords = this.fetchWords.bind(this);
 
     this.state = {
       nome: '',
@@ -15,6 +19,7 @@ class Dashboard extends React.Component {
       token: '',
       logged: false,
       message: '',
+      words: [],
     }
   }
 
@@ -22,6 +27,25 @@ class Dashboard extends React.Component {
     this.setState({
       [event.target.id]: event.target.value
     });
+  }
+
+  componentDidMount() {
+    this.fetchWords();
+  }
+
+  async updateState() {
+    await this.fetchWords();
+  }
+
+  async fetchWords() {
+    const payload = {
+      method: 'GET',
+      headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+    };
+    const data = await fetch('https://termo-crente.herokuapp.com/words', payload)
+      .then(response => response.json());
+    const { words } = data;
+    this.setState({ words });
   }
 
   async handleLogin(event) {
@@ -57,10 +81,11 @@ class Dashboard extends React.Component {
   // }
 
   render() {
-    const { token, logged, message } = this.state;
+    const { token, logged, message, words } = this.state;
     return logged ? (
-      <div className="container">
-        <Words token={token} />
+      <div className="container column-type">
+        <Words words={ words } token={ token } />
+        <AddWords token={ token } updateState={this.updateState} />
       </div>
     )
     : (
