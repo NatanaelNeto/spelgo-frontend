@@ -7,7 +7,7 @@ class Words extends React.Component {
     const { words, handleDelete } = this.props;
     return (
       <div className='block-container lista'>
-        <h3>Palavras cadastradas</h3>
+        <h3>Palavras cadastradas: {words.length}</h3>
         <ul className='palavras'>
           { words.map((item) => <Palavra key={ item } palavra={ item } handleDelete={ handleDelete } />)}
         </ul>
