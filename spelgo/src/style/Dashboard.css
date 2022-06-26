@@ -13,3 +13,28 @@
 .block-container button {
   padding: 5px 20px;
 }
+
+.palavras {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.palavra {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.palavra button {
+  background-color: #D1AC00;
+  color: #3D3522;
+  font-size: 14px;
+}
+
+.palavra button:hover {
+  background-color: #F1CC20;
+}

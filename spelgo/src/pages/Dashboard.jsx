@@ -9,6 +9,7 @@ class Dashboard extends React.Component {
     super();
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.updateState = this.updateState.bind(this);
     this.fetchWords = this.fetchWords.bind(this);
@@ -72,25 +73,31 @@ class Dashboard extends React.Component {
     this.setState({ token: apiInfo.token, logged: true, message:'' });
   }
 
-  // componentDidMount() {
-  //   const acessToken = localStorage.getItem('token');
-  //   this.setState({
-  //     token: acessToken || '',
-  //     logged: !!acessToken,
-  //   })
-  // }
+  async handleDelete(event) {
+    const { token } = this.state;
+    event.preventDefault();
+    const payload = {
+      method: 'DELETE',
+      body: JSON.stringify({ }),
+      headers: {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "authentication": token }
+    };
+    const data = await fetch(`https://termo-crente.kerokuapp.com/words/${event.target.name}`, payload)
+      .then(response => response.json());
+    console.log(data);
+    this.fetchWords();
+  }
 
   render() {
     const { token, logged, message, words } = this.state;
     return logged ? (
       <div className="container column-type">
-        <Words words={ words } token={ token } />
-        <AddWords token={ token } updateState={this.updateState} />
+        <Words words={ words } handleDelete={ this.handleDelete } />
+        <AddWords token={ token } updateState={ this.updateState } />
       </div>
     )
     : (
       <div className="container">
-        <Login handleClick={this.handleChange} buttonClick={this.handleLogin} message={message} />
+        <Login handleClick={ this.handleChange } buttonClick={ this.handleLogin } message={ message } />
       </div>
     )
   }
