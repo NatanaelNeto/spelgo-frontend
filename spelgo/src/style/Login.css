@@ -1,0 +1,17 @@
+.login {
+  background-color: #3D3522;
+  display: flex;
+  width: 300px;
+  flex-flow: column wrap;
+  padding: 20px;
+}
+
+.login h3 {
+  font-weight: 900;
+}
+
+.login-form {
+  display: flex;
+  flex-flow: column;
+  margin: 20px 0;
+}
