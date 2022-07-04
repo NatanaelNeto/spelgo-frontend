@@ -8,10 +8,10 @@ function App() {
     <BrowserRouter>
       <div>
         <Route exact path="/" component={Game} />
-        <Route exact path="/uno" component={Game} />
-        <Route exact path="/duo" component={Game} />
-        <Route exact path="/trio" component={Game} />
-        <Route exact path="/pool" component={Game} />
+        <Route exact path="/uno" render={ () => <Game active="uno" quantity="1" />} />
+        <Route exact path="/duo" render={ () => <Game active="duo" quantity="2" />} />
+        <Route exact path="/trio" render={ () => <Game active="trio" quantity="3" />} />
+        <Route exact path="/pool" render={ () => <Game active="pool" quantity="4" />} />
         <Route exact path="/dash" component={Dashboard} />
       </div>
     </BrowserRouter>
