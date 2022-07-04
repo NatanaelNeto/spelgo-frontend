@@ -47,11 +47,17 @@ class Game extends React.Component {
     currwords = currwords.filter((item, index) => currwords.indexOf(item) === index);
     console.log(currwords);
 
-    return (
-      <div>
-        <Header active = {active} />
-      </div>
-    )
+    return active ?
+      (
+        <div>
+          <Header active = {active} />
+        </div>
+      ) :
+      (
+        <div>
+          <Header />
+        </div>
+      )
   }
 }
 
