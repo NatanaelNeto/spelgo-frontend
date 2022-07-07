@@ -1,4 +1,5 @@
 import React from "react";
+import Conjunto from "../components/conjunto";
 import Header from '../components/header';
 
 class Game extends React.Component {
@@ -30,6 +31,7 @@ class Game extends React.Component {
   render() {
     const { active, quantity } = this.props;
     const { words } = this.state;
+    const PRIME = 27644437;
 
     const currDate = new Date();
     const dia = currDate.getUTCDate();
@@ -39,18 +41,25 @@ class Game extends React.Component {
     const fulldate = (parseInt("" + dia + mes + ano)) * dia * mes * ano;
     let currwords = [];
 
-    for (let i = 0; i < quantity; i += 1) {
-      const index = ((fulldate ** (2 * (i + 1))) * quantity) % words.length;
+    for (let i = 0; i < quantity && words.length > 0; i += 1) {
+      const index = (fulldate * quantity * (PRIME ** (2 * (i + 1)))) % words.length;
       currwords.push(words[index]);
     }
 
     currwords = currwords.filter((item, index) => currwords.indexOf(item) === index);
-    console.log(currwords);
+
+    const conjuntos = [];
+    for (let i = 0; i < currwords.length; i += 1) {
+      conjuntos.push(<Conjunto key={i} qtd={ 5 + parseInt(quantity) } palavra={currwords[i]} />);
+    }
 
     return active ?
       (
         <div>
           <Header active = {active} />
+          <div className="game-content">
+            { currwords.length > 0 ? conjuntos.map((item) => item) : <h3>Carregando...</h3> }
+          </div>
         </div>
       ) :
       (

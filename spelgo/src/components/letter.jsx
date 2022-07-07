@@ -2,9 +2,9 @@ import React from "react";
 
 class Letter extends React.Component {
   render() {
-    const { currClass, currLetter } = this.props;
+    const { currClass, currLetter, index } = this.props;
     return (
-      <div className={ `letter ${currClass}` }>{ currLetter }</div>
+      <div name={ index } className={ `letter ${currClass}` }>{ currLetter }</div>
     )
   }
 }
