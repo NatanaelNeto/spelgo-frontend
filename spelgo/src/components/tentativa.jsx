@@ -20,14 +20,12 @@ class Tentativa extends React.Component {
   }
 
   handleUpdate () {
-    console.log('update');
     const { palavra, linha, linhaAtual, classes } = this.props;
     const { seletor, currWord } = this.state;
     const tentativa = [];
     let currClass = linha > linhaAtual && "untouched";
     const testeCorrect = classes.every((classe) => classe === 'correct');
     if(testeCorrect) currClass = '';
-    console.log(classes);
 
     for (let i = 0; i < 5; i += 1) {
       tentativa.push(<Letter index={i} key={i} currClass={ `${(linha === linhaAtual && i === seletor) && "select"} ${currClass} ${classes ? classes[i] : ''}`} currLetter={ linha === linhaAtual ? currWord[i] : palavra[i] } />)
@@ -68,7 +66,6 @@ class Tentativa extends React.Component {
           if (currWord[i] === '') return;
         }
         const { onEnterPressed } = this.props;
-        console.log("Chamada a função", currWord);
         this.setState({ seletor: 0 }, () => onEnterPressed(currWord.join(''), this.handleUpdate));
         return;
       }

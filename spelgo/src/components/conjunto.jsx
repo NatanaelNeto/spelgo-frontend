@@ -14,14 +14,13 @@ class Conjunto extends React.Component {
   }
 
   componentDidMount () {
-    const { qtd, palavra } = this.props;
+    const { qtd } = this.props;
     const classes = [];
     const palavrasUsadas = [];
     for (let i = 0; i < qtd; i += 1) {
       classes.push(['', '', '', '', '']);
       palavrasUsadas.push('');
     }
-    console.log(palavra);
     this.setState({ classes, palavrasUsadas });
   }
 
@@ -32,7 +31,6 @@ class Conjunto extends React.Component {
     const letras = palavra.split('').map((letra) => letra.toUpperCase());
     
     if (!currPalavra) {
-      console.warn(`Palavra ${ correct } não encontrada`);
       return;
     }
     palavrasUsadas[linhaAtual - 1] = currPalavra;
@@ -52,7 +50,6 @@ class Conjunto extends React.Component {
     if (acertos === 5) {
       // Acertou
       newLinha = - 1;
-      console.log(`Acertou a palavra ${palavra}! Parabéns, crente!`);
     }
     else if (linhaAtual + 1 <= qtd) {
       // Errou
@@ -63,7 +60,6 @@ class Conjunto extends React.Component {
       newLinha = - 1;
     }
     this.setState({ linhaAtual: newLinha, classes, palavrasUsadas }, () => {
-      console.log('handle enter');
       callback();
     });
   }
@@ -74,7 +70,6 @@ class Conjunto extends React.Component {
     const { qtd } = this.props;
     const { linhaAtual, classes, palavrasUsadas } = this.state;
     const tentativas = [];
-    console.log("linha atual: ", linhaAtual);
     for (let i = 0; i < qtd; i += 1) {
       tentativas.push(
         <Tentativa
