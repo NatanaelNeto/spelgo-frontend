@@ -14,7 +14,8 @@ class Conjunto extends React.Component {
   }
 
   componentDidMount () {
-    const { qtd } = this.props;
+    const { qtd, palavra } = this.props;
+    console.log(palavra);
     const classes = [];
     const palavrasUsadas = [];
     for (let i = 0; i < qtd; i += 1) {
@@ -29,16 +30,16 @@ class Conjunto extends React.Component {
     const { linhaAtual, classes, palavrasUsadas } = this.state;
     const currPalavra = verificador(correct);
     const letras = palavra.split('').map((letra) => letra.toUpperCase());
-    
     if (!currPalavra) {
       return;
     }
     palavrasUsadas[linhaAtual - 1] = currPalavra;
     let acertos = 0;
     for (let i = 0; i < 5; i += 1) {
-      if (palavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() === currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()) {
+      if (palavra[i].toUpperCase() === currPalavra[i].toUpperCase()) {
         acertos += 1;
         classes[linhaAtual - 1][i] = 'correct';
+        letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
       }
       else if (letras.includes(currPalavra[i].toUpperCase())) {
         letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
