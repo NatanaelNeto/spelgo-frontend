@@ -12,12 +12,19 @@ class Tentativa extends React.Component {
 
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.getAlert = this.getAlert.bind(this);
   }
 
   componentDidMount () {
     document.addEventListener("keydown", this.handleSelect);
     this.setState({ currWord: ['', '', '', '', ''] }, this.handleUpdate);
   }
+
+  getAlert() {
+    const { seletor } = this.state;
+    this.setState({ seletor }, this.handleUpdate);
+  }
+
 
   handleUpdate () {
     const { palavra, linha, linhaAtual, classes } = this.props;

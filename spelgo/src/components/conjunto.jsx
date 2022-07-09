@@ -3,14 +3,16 @@ import React from "react";
 import Tentativa from "./tentativa";
 
 class Conjunto extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       linhaAtual: 1,
       classes:[],
       palavrasUsadas: [],
     }
     this.handleEnter = this.handleEnter.bind(this);
+
+    this.child = React.createRef();
   }
 
   componentDidMount () {
@@ -68,11 +70,26 @@ class Conjunto extends React.Component {
   
 
   render() {
+    document.dispatchEvent(new KeyboardEvent('keydown', {
+      'key':'ArrowRight'
+    }));
     const { qtd } = this.props;
     const { linhaAtual, classes, palavrasUsadas } = this.state;
     const tentativas = [];
     for (let i = 0; i < qtd; i += 1) {
+      i === linhaAtual ? 
       tentativas.push(
+        <Tentativa
+          key={i}
+          ref={ this.child }
+          linha={ i + 1 }
+          linhaAtual={ linhaAtual }
+          palavra={ palavrasUsadas[i] }
+          classes={ classes[i] }
+          onEnterPressed={ this.handleEnter }
+        />
+      )
+      : tentativas.push(
         <Tentativa
           key={i}
           linha={ i + 1 }
@@ -83,6 +100,8 @@ class Conjunto extends React.Component {
         />
       );
     }
+    this.child.current && this.child.current.getAlert();
+    console.log(this.child.current);
     return (
       <div className='conjunto'>
         { tentativas.map((item) => item) }
