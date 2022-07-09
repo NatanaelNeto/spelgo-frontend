@@ -12,6 +12,7 @@ class Game extends React.Component {
     };
 
     this.fetchWords = this.fetchWords.bind(this);
+    this.verifyOnDB = this.verifyOnDB.bind(this);
   }
 
   componentDidMount() {
@@ -59,13 +60,19 @@ class Game extends React.Component {
     return ((qtd ** 2) - qtd) / 2;
   }
 
+  verifyOnDB(palavra) {
+    const { words } = this.state;
+    const resp = words.find((word) => word.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() === palavra.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase());
+    return resp;
+  }
+
   render() {
     const { active, quantity } = this.props;
     const { currWords } = this.state;
 
     const conjuntos = [];
     for (let i = 0; i < currWords.length; i += 1) {
-      conjuntos.push(<Conjunto key={i} qtd={ 5 + parseInt(quantity) } palavra={currWords[i]} />);
+      conjuntos.push(<Conjunto key={ i } qtd={ 5 + parseInt(quantity) } palavra={ currWords[i] } verificador={ this.verifyOnDB } />);
     }
 
     return active ?

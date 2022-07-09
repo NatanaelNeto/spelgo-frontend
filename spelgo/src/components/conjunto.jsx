@@ -7,31 +7,82 @@ class Conjunto extends React.Component {
     super();
     this.state = {
       linhaAtual: 1,
+      classes:[],
+      palavrasUsadas: [],
     }
     this.handleEnter = this.handleEnter.bind(this);
   }
 
-  handleEnter (_correct) {
-    const { qtd } = this.props;
-    const { linhaAtual } = this.state;
-    if (linhaAtual + 1 <= qtd) {
-      this.setState({ linhaAtual: linhaAtual + 1 });
-      return;
+  componentDidMount () {
+    const { qtd, palavra } = this.props;
+    const classes = [];
+    const palavrasUsadas = [];
+    for (let i = 0; i < qtd; i += 1) {
+      classes.push(['', '', '', '', '']);
+      palavrasUsadas.push('');
     }
-    console.log("Fim de Jogo");
+    console.log(palavra);
+    this.setState({ classes, palavrasUsadas });
   }
 
+  handleEnter (correct, callback) {
+    const { qtd, verificador, palavra } = this.props;
+    const { linhaAtual, classes, palavrasUsadas } = this.state;
+    const currPalavra = verificador(correct);
+    const letras = palavra.split('').map((letra) => letra.toUpperCase());
+    
+    if (!currPalavra) {
+      console.warn(`Palavra ${ correct } não encontrada`);
+      return;
+    }
+    palavrasUsadas[linhaAtual - 1] = currPalavra;
+    let acertos = 0;
+    for (let i = 0; i < 5; i += 1) {
+      if (palavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() === currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()) {
+        acertos += 1;
+        classes[linhaAtual - 1][i] = 'correct';
+      }
+      else if (letras.includes(currPalavra[i].toUpperCase())) {
+        letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
+        classes[linhaAtual - 1][i] = 'wrong-position';
+      }
+    }
+
+    let newLinha;
+    if (acertos === 5) {
+      // Acertou
+      newLinha = - 1;
+      console.log(`Acertou a palavra ${palavra}! Parabéns, crente!`);
+    }
+    else if (linhaAtual + 1 <= qtd) {
+      // Errou
+      newLinha = linhaAtual + 1;
+    }
+    else {
+      // Perdeu
+      newLinha = - 1;
+    }
+    this.setState({ linhaAtual: newLinha, classes, palavrasUsadas }, () => {
+      console.log('handle enter');
+      callback();
+    });
+  }
+
+  
+
   render() {
-    const { qtd, palavra } = this.props;
-    const { linhaAtual } = this.state;
+    const { qtd } = this.props;
+    const { linhaAtual, classes, palavrasUsadas } = this.state;
     const tentativas = [];
+    console.log("linha atual: ", linhaAtual);
     for (let i = 0; i < qtd; i += 1) {
       tentativas.push(
         <Tentativa
           key={i}
           linha={ i + 1 }
           linhaAtual={ linhaAtual }
-          palavra={ palavra }
+          palavra={ palavrasUsadas[i] }
+          classes={ classes[i] }
           onEnterPressed={ this.handleEnter }
         />
       );
