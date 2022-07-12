@@ -27,10 +27,10 @@ class Tentativa extends React.Component {
 
 
   handleUpdate () {
-    const { palavra, linha, linhaAtual, classes } = this.props;
+    const { palavra, linha, linhaAtual, complete, classes } = this.props;
     const { seletor, currWord } = this.state;
     const tentativa = [];
-    let currClass = linha > linhaAtual && "untouched";
+    let currClass = (complete || linha > linhaAtual) && "untouched";
     const testeCorrect = classes.every((classe) => classe === 'correct');
     if(testeCorrect) currClass = '';
 

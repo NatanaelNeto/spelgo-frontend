@@ -9,15 +9,19 @@ class Conjunto extends React.Component {
       linhaAtual: 1,
       classes:[],
       palavrasUsadas: [],
+      complete: false,
     }
     this.handleEnter = this.handleEnter.bind(this);
 
     this.child = React.createRef();
   }
 
+  compareAB(a, b) {
+    return a.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase() === b.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()
+  }
+
   componentDidMount () {
-    const { qtd, palavra } = this.props;
-    console.log(palavra);
+    const { qtd } = this.props;
     const classes = [];
     const palavrasUsadas = [];
     for (let i = 0; i < qtd; i += 1) {
@@ -27,23 +31,33 @@ class Conjunto extends React.Component {
     this.setState({ classes, palavrasUsadas });
   }
 
+  findOnArray(arr, letter) {
+    for (let i = 0; i < arr.length; i += 1) {
+      if (this.compareAB(arr[i],letter)) return true;
+    }
+    return false;
+  }
+
   handleEnter (correct, callback) {
     const { qtd, verificador, palavra } = this.props;
     const { linhaAtual, classes, palavrasUsadas } = this.state;
     const currPalavra = verificador(correct);
     const letras = palavra.split('').map((letra) => letra.toUpperCase());
+    let comp = false;
     if (!currPalavra) {
       return;
     }
     palavrasUsadas[linhaAtual - 1] = currPalavra;
     let acertos = 0;
     for (let i = 0; i < 5; i += 1) {
-      if (palavra[i].toUpperCase() === currPalavra[i].toUpperCase()) {
+      if (this.compareAB(palavra[i], currPalavra[i])) {
         acertos += 1;
         classes[linhaAtual - 1][i] = 'correct';
         letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
       }
-      else if (letras.includes(currPalavra[i].toUpperCase())) {
+    }
+    for (let i = 0; i < 5; i += 1) {
+      if (this.findOnArray(letras, currPalavra[i])) {
         letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
         classes[linhaAtual - 1][i] = 'wrong-position';
       }
@@ -53,6 +67,7 @@ class Conjunto extends React.Component {
     if (acertos === 5) {
       // Acertou
       newLinha = - 1;
+      comp = true;
     }
     else if (linhaAtual + 1 <= qtd) {
       // Errou
@@ -62,7 +77,8 @@ class Conjunto extends React.Component {
       // Perdeu
       newLinha = - 1;
     }
-    this.setState({ linhaAtual: newLinha, classes, palavrasUsadas }, () => {
+    this.setState({ linhaAtual: newLinha, classes, palavrasUsadas, complete: comp }, () => {
+      console.log(comp);
       callback();
     });
   }
@@ -74,7 +90,7 @@ class Conjunto extends React.Component {
       'key':'ArrowRight'
     }));
     const { qtd } = this.props;
-    const { linhaAtual, classes, palavrasUsadas } = this.state;
+    const { linhaAtual, classes, palavrasUsadas, complete } = this.state;
     const tentativas = [];
     for (let i = 0; i < qtd; i += 1) {
       i === linhaAtual ? 
@@ -87,6 +103,7 @@ class Conjunto extends React.Component {
           palavra={ palavrasUsadas[i] }
           classes={ classes[i] }
           onEnterPressed={ this.handleEnter }
+          complete={ complete }
         />
       )
       : tentativas.push(
@@ -101,7 +118,6 @@ class Conjunto extends React.Component {
       );
     }
     this.child.current && this.child.current.getAlert();
-    console.log(this.child.current);
     return (
       <div className='conjunto'>
         { tentativas.map((item) => item) }
