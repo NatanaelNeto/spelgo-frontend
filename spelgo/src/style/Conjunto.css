@@ -1,0 +1,37 @@
+.tentativa {
+  display: flex;
+  flex-flow: row;
+  list-style: none;
+}
+
+.letter {
+  background-color: #3D3522;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-weight: 900;
+  height: 48px;
+  line-height: 48px;
+  margin: 2px;
+  padding: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 48px;
+}
+
+.untouched {
+  background-color: rgba(0, 0, 0, 0);
+  border: 4px solid #3D3522;
+}
+
+.select {
+  border: 4px solid #CAF7E2;
+  line-height: 40px;
+}
+
+.wrong-position {
+  background-color: #b08b00;
+}
+
+.correct {
+  background-color: #58B09C;
+}
