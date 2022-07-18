@@ -1,6 +1,7 @@
 import React from "react";
 import Conjunto from "../components/conjunto";
 import Header from '../components/header';
+import OpenScreen from "./OpenScreen";
 
 class Game extends React.Component {
   constructor() {
@@ -87,6 +88,7 @@ class Game extends React.Component {
       (
         <div>
           <Header />
+          <OpenScreen />
         </div>
       )
   }

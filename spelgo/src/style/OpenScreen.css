@@ -1,0 +1,22 @@
+.open-screen {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.open-screen div {
+  margin: 20px 0;
+}
+
+.open-screen p {
+  font-size: 24px;
+}
+
+.open-screen .title h2 {
+  font-size: 56px;
+  font-weight: 900;
+}

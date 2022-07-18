@@ -20,7 +20,7 @@ class Header extends React.Component {
           </ul>
         </div>
         <div className="logo">
-          <h1>spelGo</h1>
+          <Link to={'/'}><h1>spelGo</h1></Link>
         </div>
       </nav>
     );
