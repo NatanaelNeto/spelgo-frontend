@@ -41,24 +41,28 @@ class Conjunto extends React.Component {
   handleEnter (correct, callback) {
     const { qtd, verificador, palavra } = this.props;
     const { linhaAtual, classes, palavrasUsadas } = this.state;
-    const currPalavra = verificador(correct);
+    const curr = verificador(correct);
     const letras = palavra.split('').map((letra) => letra.toUpperCase());
     let comp = false;
-    if (!currPalavra) {
+    if (!curr) {
       return;
     }
+
+    const currPalavra = curr.split('');
     palavrasUsadas[linhaAtual - 1] = currPalavra;
     let acertos = 0;
+    const posVerified = [];
     for (let i = 0; i < 5; i += 1) {
       if (this.compareAB(palavra[i], currPalavra[i])) {
         acertos += 1;
         classes[linhaAtual - 1][i] = 'correct';
-        letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
+        letras.splice(letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()), 1);
+        posVerified.push(i);
       }
     }
     for (let i = 0; i < 5; i += 1) {
-      if (this.findOnArray(letras, currPalavra[i])) {
-        letras.splice(letras.indexOf(currPalavra[i].toUpperCase()), 1);
+      if (!posVerified.find((pos) => pos === i) && this.findOnArray(letras, currPalavra[i])) {
+        letras.splice(letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()), 1);
         classes[linhaAtual - 1][i] = 'wrong-position';
       }
     }
@@ -78,12 +82,9 @@ class Conjunto extends React.Component {
       newLinha = - 1;
     }
     this.setState({ linhaAtual: newLinha, classes, palavrasUsadas, complete: comp }, () => {
-      console.log(comp);
       callback();
     });
   }
-
-  
 
   render() {
     document.dispatchEvent(new KeyboardEvent('keydown', {

@@ -1,0 +1,11 @@
+.grid-letter {
+  display: flex;
+  width: 95vw;
+  height: 25vh;
+  margin: 10px;
+  justify-content: center;
+}
+
+.grid-letter .letter {
+  width: 9%;
+}
