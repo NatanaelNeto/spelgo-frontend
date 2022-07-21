@@ -8,15 +8,51 @@
   text-align: center;
 }
 
-.open-screen div {
-  margin: 20px 0;
-}
-
 .open-screen p {
   font-size: 24px;
+  line-height: 32px;
+  max-width: 70%;
+  margin: 10px auto;
+}
+
+.open-screen .title {
+  width: inherit;
 }
 
 .open-screen .title h2 {
   font-size: 56px;
   font-weight: 900;
+}
+
+.open-screen p.open-word {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.open-screen p.open-word div {
+  margin: 20px 5px;
+}
+
+.open-screen p span {
+  font-style: italic;
+  font-size: 18px;
+  color: #a8d5c0;
+}
+
+span.letter.green {
+  font-style: normal;
+  color: #CAF7E2;
+  background-color: #58B09C;
+  padding: 5px 10px;
+  line-height: 32px;
+}
+
+span.letter.yellow {
+  font-style: normal;
+  padding: 5px 10px;
+  color: #CAF7E2;
+  background-color: #b08b00;
+  line-height: 32px;
 }
