@@ -66,6 +66,8 @@ class Game extends React.Component {
     return resp;
   }
 
+  
+
   render() {
     const { active, quantity } = this.props;
     const { currWords } = this.state;

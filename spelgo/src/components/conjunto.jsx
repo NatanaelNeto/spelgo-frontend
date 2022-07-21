@@ -31,9 +31,9 @@ class Conjunto extends React.Component {
     this.setState({ classes, palavrasUsadas });
   }
 
-  findOnArray(arr, letter) {
+  findOnArray(arr, pos, letter) {
     for (let i = 0; i < arr.length; i += 1) {
-      if (this.compareAB(arr[i],letter)) return true;
+      if (!pos.find((pos) => pos === i) && this.compareAB(arr[i],letter)) return true;
     }
     return false;
   }
@@ -60,8 +60,9 @@ class Conjunto extends React.Component {
         posVerified.push(i);
       }
     }
+
     for (let i = 0; i < 5; i += 1) {
-      if (!posVerified.find((pos) => pos === i) && this.findOnArray(letras, currPalavra[i])) {
+      if (!posVerified.find((pos) => pos === i) && this.findOnArray(letras, posVerified, currPalavra[i])) {
         letras.splice(letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()), 1);
         classes[linhaAtual - 1][i] = 'wrong-position';
       }
