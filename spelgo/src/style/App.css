@@ -30,6 +30,15 @@ nav {
   top: 0;
 }
 
+.logo a {
+  color: #CAF7E2;
+  text-decoration: none;
+}
+
+.logo:hover a {
+  color: #DFF;
+}
+
 nav div {
   display: flex;
   width: 50%;
