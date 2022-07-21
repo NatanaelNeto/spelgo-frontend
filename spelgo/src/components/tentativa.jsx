@@ -12,11 +12,13 @@ class Tentativa extends React.Component {
 
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleMouse = this.handleMouse.bind(this);
     this.getAlert = this.getAlert.bind(this);
   }
 
   componentDidMount () {
     document.addEventListener("keydown", this.handleSelect);
+    document.addEventListener("mousedown", this.handleMouse);
     this.setState({ currWord: ['', '', '', '', ''] }, this.handleUpdate);
   }
 
@@ -25,6 +27,13 @@ class Tentativa extends React.Component {
     this.setState({ seletor }, this.handleUpdate);
   }
 
+  async handleMouse (event) {
+    event.preventDefault();
+    const name = await event.target.getAttribute('name');
+    if (name) {
+      this.setState({ seletor: Number(name)}, () => { this.handleUpdate() });
+    }
+  }
 
   handleUpdate () {
     const { palavra, linha, linhaAtual, complete, classes } = this.props;
@@ -88,7 +97,7 @@ class Tentativa extends React.Component {
     const { tentativa } = this.state;
     return (
       <ul className={ `tentativa ${linha}` }>
-        { tentativa.map((item) => <li>{ item }</li>) }
+        { tentativa.map((item, index) => <li name={ index }>{ item }</li>) }
       </ul>
     )
   }
