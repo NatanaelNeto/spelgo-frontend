@@ -119,6 +119,7 @@ class Conjunto extends React.Component {
           palavra={ palavrasUsadas[i] }
           classes={ classes[i] }
           onEnterPressed={ this.handleEnter }
+          complete={ complete }
         />
       );
     }

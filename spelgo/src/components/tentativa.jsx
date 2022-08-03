@@ -17,9 +17,20 @@ class Tentativa extends React.Component {
   }
 
   componentDidMount () {
-    document.addEventListener("keydown", this.handleSelect);
-    document.addEventListener("mousedown", this.handleMouse);
-    this.setState({ currWord: ['', '', '', '', ''] }, this.handleUpdate);
+    const { complete } = this.props;
+    if (!complete) {
+      document.addEventListener("keydown", this.handleSelect);
+      document.addEventListener("mousedown", this.handleMouse);
+      this.setState({ currWord: ['', '', '', '', ''] }, this.handleUpdate);
+    }
+  }
+
+  componentDidUpdate() {
+    const { complete } = this.props;
+    if (complete) {
+      document.removeEventListener("keydown", this.handleSelect);
+      document.removeEventListener("mousedown", this.handleMouse);
+    }
   }
 
   getAlert() {
@@ -38,15 +49,15 @@ class Tentativa extends React.Component {
   handleUpdate () {
     const { palavra, linha, linhaAtual, complete, classes } = this.props;
     const { seletor, currWord } = this.state;
-    const tentativa = [];
-    let currClass = (complete || linha > linhaAtual) && "untouched";
-    const testeCorrect = classes.every((classe) => classe === 'correct');
-    if(testeCorrect) currClass = '';
+      const tentativa = [];
+      let currClass = (complete || linha > linhaAtual) && "untouched";
+      const testeCorrect = classes.every((classe) => classe === 'correct');
+      if(testeCorrect) currClass = '';
 
-    for (let i = 0; i < 5; i += 1) {
-      tentativa.push(<Letter index={i} key={i} currClass={ `${(linha === linhaAtual && i === seletor) && "select"} ${currClass} ${classes ? classes[i] : ''}`} currLetter={ linha === linhaAtual ? currWord[i] : palavra[i] } />)
-    }
-    this.setState({ tentativa });
+      for (let i = 0; i < 5; i += 1) {
+        tentativa.push(<Letter index={i} key={i} currClass={ `${(linha === linhaAtual && i === seletor) && "select"} ${currClass} ${classes ? classes[i] : ''}`} currLetter={ linha === linhaAtual ? currWord[i] : palavra[i] } />)
+      }
+      this.setState({ tentativa });
   }
 
   handleSelect (event) {
