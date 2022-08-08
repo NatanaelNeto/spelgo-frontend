@@ -4,9 +4,9 @@ import GridLetter from "./gridLetter";
 class Grid extends React.Component {
   render () {
     const { classes } = this.props;
-    const letters = ['a', 'b', 'c', 'ç', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    const letters = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','ç','z','x','c','v','b','n','m'];
     return (
-      <div className={ ...classes }>
+      <div className="game-grid-content">
         { letters.map ((l, index) => <GridLetter letter={l} classes={classes[index]}  /> ) }
       </div>
     );

@@ -31,9 +31,9 @@ class Conjunto extends React.Component {
     this.setState({ classes, palavrasUsadas });
   }
 
-  findOnArray(arr, pos, letter) {
+  findOnArray(arr, letter) {
     for (let i = 0; i < arr.length; i += 1) {
-      if (!pos.find((pos) => pos === i) && this.compareAB(arr[i],letter)) return true;
+      if (this.compareAB(arr[i], letter)) return true;
     }
     return false;
   }
@@ -52,18 +52,21 @@ class Conjunto extends React.Component {
     palavrasUsadas[linhaAtual - 1] = currPalavra;
     let acertos = 0;
     const posVerified = [];
+
+    // VERIFICA SE HÁ LETRAS NA POSIÇÃO CORRETA
     for (let i = 0; i < 5; i += 1) {
       if (this.compareAB(palavra[i], currPalavra[i])) {
         acertos += 1;
         classes[linhaAtual - 1][i] = 'correct';
-        letras.splice(letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()), 1);
+        letras[i] = '';
         posVerified.push(i);
       }
     }
 
+    // VERIFICA SE, DAS LETRAS RESTANTES, HÁ ALGUMA NA POSIÇÃO ERRADA
     for (let i = 0; i < 5; i += 1) {
-      if (!posVerified.find((pos) => pos === i) && this.findOnArray(letras, posVerified, currPalavra[i])) {
-        letras.splice(letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()), 1);
+      if (!posVerified.some((pos) => Number(pos) === i) && this.findOnArray(letras, currPalavra[i])) {
+        letras[letras.indexOf(currPalavra[i].normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase())] = '';
         classes[linhaAtual - 1][i] = 'wrong-position';
       }
     }
@@ -116,6 +119,7 @@ class Conjunto extends React.Component {
           palavra={ palavrasUsadas[i] }
           classes={ classes[i] }
           onEnterPressed={ this.handleEnter }
+          complete={ complete }
         />
       );
     }
