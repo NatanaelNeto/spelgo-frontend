@@ -1,7 +1,10 @@
 import React from "react";
 import Conjunto from "../components/conjunto";
+import Grid from "../components/Grid";
 import Header from '../components/header';
 import OpenScreen from "./OpenScreen";
+
+import '../style/Grid.css';
 
 class Game extends React.Component {
   constructor() {
@@ -85,6 +88,9 @@ class Game extends React.Component {
           <div className="game-content">
             { currWords.length > 0 ? conjuntos.map((item) => item) : <h3>Carregando...</h3> }
           </div>
+            {/* <div className="game-grid">
+              <Grid classes={ [] }/>
+            </div> */}
         </div>
       ) :
       (
